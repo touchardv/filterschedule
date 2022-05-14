@@ -1,0 +1,27 @@
+- sites: ["darkweb"]
+  for:
+    all: true
+  when:
+    always: true
+
+- sites: ["discord", "instagram", "twitch", "twich"]
+  for:
+    all: false
+    hosts:
+      - 10.0.0.100
+      - 10.0.0.101
+  when:
+    always: false
+    schedule:
+      - days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        hours:
+          - from: 00:00
+            to: 20:00
+          - from: 21:00
+            to: 23:59
+      - days: ["Saturday", "Sunday"]
+        hours:
+          - from: 00:00
+            to: 07:00
+          - from: 21:00
+            to: 23:59

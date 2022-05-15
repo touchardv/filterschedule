@@ -21,7 +21,7 @@ filterschedule ./path/to/filterschedule.yaml
 
 ~~~ corefile
 . {
-	filterschedule /etc/coredns/filterschedule.yaml
+    filterschedule /etc/coredns/filterschedule.yaml
     forward . 8.8.8.8 9.9.9.9
 }
 ~~~

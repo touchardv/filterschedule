@@ -22,15 +22,34 @@ func TestDayOfTheWeekJSON(t *testing.T) {
 }
 
 func TestTimeInterval(t *testing.T) {
-	interval := TimeInteval{From: "00:00", To: "21:00"}
+	interval := TimeInteval{From: "12:00", To: "14:00"}
 
-	timestamp := time.Date(2022, 5, 9, 10, 30, 0, 0, time.UTC)
+	timestamp := time.Date(2022, 5, 9, 12, 0, 0, 0, time.UTC)
+	if interval.includes(timestamp) {
+		t.Fatal(interval, " should not include ", timestamp)
+	}
+
+	timestamp = time.Date(2022, 5, 9, 12, 0, 1, 0, time.UTC)
 	if !interval.includes(timestamp) {
 		t.Fatal(interval, " should include ", timestamp)
 	}
 
-	timestamp = time.Date(2022, 5, 9, 22, 30, 0, 0, time.UTC)
+	timestamp = time.Date(2022, 5, 9, 13, 59, 0, 0, time.UTC)
+	if !interval.includes(timestamp) {
+		t.Fatal(interval, " should include ", timestamp)
+	}
+
+	timestamp = time.Date(2022, 5, 9, 14, 0, 0, 0, time.UTC)
 	if interval.includes(timestamp) {
 		t.Fatal(interval, " should not include ", timestamp)
+	}
+
+	location, err := time.LoadLocation("Europe/Brussels")
+	if err != nil {
+		panic(err)
+	}
+	timestamp = time.Date(2022, 5, 9, 13, 59, 0, 0, location)
+	if !interval.includes(timestamp) {
+		t.Fatal(interval, " should include ", timestamp)
 	}
 }

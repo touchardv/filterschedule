@@ -7,8 +7,8 @@ import (
 	"time"
 )
 
-func TesLoadFromFile(t *testing.T) {
-	f, err := LoadFromFile("filterschedule.yaml")
+func TestLoadFromFile(t *testing.T) {
+	f, err := LoadFromFile("filterschedule.example.yaml")
 	if err != nil {
 		t.Fatal("Expected error to be nil but got: ", err)
 	}

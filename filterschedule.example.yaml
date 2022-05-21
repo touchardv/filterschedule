@@ -1,10 +1,12 @@
-- sites: ["darkweb"]
+- description: Darkweb is not allowed
+  sites: ["darkweb"]
   for:
     all: true
   when:
     always: true
 
-- sites: ["discord", "instagram", "twitch", "twich"]
+- description: Limit social media
+  sites: ["discord", "instagram", "twitch", "twich"]
   for:
     all: false
     hosts:

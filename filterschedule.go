@@ -26,7 +26,7 @@ func (e FilterSchedule) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *d
 	timestamp := time.Now()
 	for _, f := range e.filters {
 		if f.IsMatching(req.Name(), req.IP(), timestamp) {
-			log.Warningf("Match found: %s for %s", req.Name(), req.IP())
+			log.Warningf("Filter '%s' matched: %s", f.Description, req.Name())
 			m := newResponseMessage(req)
 			m.SetReply(r)
 			m.SetRcode(r, dns.RcodeSuccess)

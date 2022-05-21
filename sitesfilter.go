@@ -9,9 +9,10 @@ import (
 )
 
 type SitesFilter struct {
-	Sites []string
-	For   Targets
-	When  Schedule
+	Description string
+	Sites       []string
+	For         Targets
+	When        Schedule
 }
 
 type Targets struct {
@@ -31,7 +32,7 @@ func LoadFromFile(filename string) ([]SitesFilter, error) {
 func (sf *SitesFilter) IsMatching(name string, clientIP string, t time.Time) bool {
 	for _, p := range sf.Sites {
 		if strings.Contains(name, p) {
-			if sf.isApplicableTo(clientIP, t) && sf.isApplicableAt(t) {
+			if sf.isApplicableTo(clientIP) && sf.isApplicableAt(t) {
 				return true
 			}
 		}
@@ -39,7 +40,7 @@ func (sf *SitesFilter) IsMatching(name string, clientIP string, t time.Time) boo
 	return false
 }
 
-func (sf *SitesFilter) isApplicableTo(clientIP string, t time.Time) bool {
+func (sf *SitesFilter) isApplicableTo(clientIP string) bool {
 	if sf.For.All {
 		return true
 	} else {

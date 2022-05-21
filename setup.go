@@ -20,7 +20,7 @@ func setup(c *caddy.Controller) error {
 			log.Warning("Failed to load: ", err)
 			f = make([]SitesFilter, 0)
 		} else {
-			log.Infof("Loaded %d rule(s)", len(f))
+			log.Infof("Loaded %d filter(s)", len(f))
 		}
 		return FilterSchedule{
 			filters: f,

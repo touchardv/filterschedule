@@ -59,6 +59,7 @@ func isApplicableAtDays(days []DayOfTheWeek, t time.Time) bool {
 	} else {
 		for _, d := range days {
 			if DayOfTheWeek(t.Weekday()) == d {
+				log.Debug("Matched: ", days)
 				return true
 			}
 		}
@@ -72,6 +73,7 @@ func isApplicableAtHours(timeIntervals []TimeInteval, t time.Time) bool {
 	} else {
 		for _, ti := range timeIntervals {
 			if ti.includes(t) {
+				log.Debug("Matched: ", timeIntervals)
 				return true
 			}
 		}

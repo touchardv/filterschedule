@@ -1,12 +1,27 @@
+- description: No surfing during the night
+  filter:
+    everything: true
+  for:
+    all: true
+  when:
+    always: false
+    schedule:
+      - days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        hours:
+          - from: 00:00
+            to: 06:00
+
 - description: Darkweb is not allowed
-  sites: ["darkweb"]
+  filter:
+    sites: ["darkweb"]
   for:
     all: true
   when:
     always: true
 
 - description: Limit social media
-  sites: ["discord", "instagram", "twitch", "twich"]
+  filter:
+    sites: ["discord", "instagram", "twitch", "twich"]
   for:
     all: false
     hosts:

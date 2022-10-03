@@ -12,16 +12,28 @@ func TestLoadFromFile(t *testing.T) {
 	if err != nil {
 		t.Fatal("Expected error to be nil but got: ", err)
 	}
-	if len(f) != 2 {
-		t.Fatal("Expected 2 filters but got: ", len(f))
+	if len(f) != 3 {
+		t.Fatal("Expected 3 filters but got: ", len(f))
 	}
+}
+
+func TestAllSitesFilter(t *testing.T) {
+	sf := SitesFilter{
+		Filter: Sites{Everything: true},
+		For:    Targets{All: true},
+		When:   Schedule{Always: true},
+	}
+
+	timestamp := time.Now()
+	ip := "192.168.1.2"
+	assertIsMatching(t, sf, "bla.com", ip, timestamp)
 }
 
 func TestPermanentForAllFilter(t *testing.T) {
 	sf := SitesFilter{
-		Sites: []string{"facebook", "instagram"},
-		For:   Targets{All: true},
-		When:  Schedule{Always: true},
+		Filter: Sites{Sites: []string{"facebook", "instagram"}},
+		For:    Targets{All: true},
+		When:   Schedule{Always: true},
 	}
 	timestamp := time.Now()
 	ip := "192.168.1.2"
@@ -33,9 +45,9 @@ func TestPermanentForAllFilter(t *testing.T) {
 
 func TestPermanentNotForAllFilter(t *testing.T) {
 	sf := SitesFilter{
-		Sites: []string{"facebook", "instagram"},
-		For:   Targets{All: false, Hosts: []string{"192.168.1.66"}},
-		When:  Schedule{Always: true},
+		Filter: Sites{Sites: []string{"facebook", "instagram"}},
+		For:    Targets{All: false, Hosts: []string{"192.168.1.66"}},
+		When:   Schedule{Always: true},
 	}
 	timestamp := time.Now()
 
@@ -50,8 +62,8 @@ func TestPermanentNotForAllFilter(t *testing.T) {
 
 func TestScheduledDayForAllFilter(t *testing.T) {
 	sf := SitesFilter{
-		Sites: []string{"facebook", "instagram"},
-		For:   Targets{All: true},
+		Filter: Sites{Sites: []string{"facebook", "instagram"}},
+		For:    Targets{All: true},
 		When: Schedule{Always: false, Schedule: []ScheduleEntry{{Days: []DayOfTheWeek{
 			DayOfTheWeek(time.Sunday),
 		}}}},
@@ -71,8 +83,8 @@ func TestScheduledDayForAllFilter(t *testing.T) {
 
 func TestScheduledHourForAllFilter(t *testing.T) {
 	sf := SitesFilter{
-		Sites: []string{"facebook", "instagram"},
-		For:   Targets{All: true},
+		Filter: Sites{Sites: []string{"facebook", "instagram"}},
+		For:    Targets{All: true},
 		When: Schedule{Always: false, Schedule: []ScheduleEntry{{Hours: []TimeInteval{
 			{From: "00:00", To: "20:00"},
 			{From: "21:00", To: "23:59"},

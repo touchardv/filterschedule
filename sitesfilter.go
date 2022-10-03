@@ -10,9 +10,14 @@ import (
 
 type SitesFilter struct {
 	Description string
-	Sites       []string
+	Filter      Sites
 	For         Targets
 	When        Schedule
+}
+
+type Sites struct {
+	Everything bool
+	Sites      []string
 }
 
 type Targets struct {
@@ -30,10 +35,16 @@ func LoadFromFile(filename string) ([]SitesFilter, error) {
 }
 
 func (sf *SitesFilter) IsMatching(name string, clientIP string, t time.Time) bool {
-	for _, p := range sf.Sites {
-		if strings.Contains(name, p) {
-			if sf.isApplicableTo(clientIP) && sf.isApplicableAt(t) {
-				return true
+	if sf.Filter.Everything {
+		if sf.isApplicableTo(clientIP) && sf.isApplicableAt(t) {
+			return true
+		}
+	} else {
+		for _, p := range sf.Filter.Sites {
+			if strings.Contains(name, p) {
+				if sf.isApplicableTo(clientIP) && sf.isApplicableAt(t) {
+					return true
+				}
 			}
 		}
 	}

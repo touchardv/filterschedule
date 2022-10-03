@@ -28,13 +28,15 @@ filterschedule ./path/to/filterschedule.yaml
 
 The configuration file is written using YAML.
 ~~~ yaml
-- sites: ["darkweb"]
+- filter:
+    sites: ["darkweb"]
   for:
     all: true
   when:
     always: true
 
-- sites: ["discord", "instagram", "twitch", "twich"]
+- filter:
+    sites: ["discord", "instagram", "twitch", "twich"]
   for:
     all: false
     hosts:

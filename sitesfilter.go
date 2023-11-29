@@ -1,9 +1,10 @@
 package filterschedule
 
 import (
-	"io/ioutil"
 	"strings"
 	"time"
+
+	"os"
 
 	"k8s.io/apimachinery/pkg/util/yaml"
 )
@@ -27,7 +28,7 @@ type Targets struct {
 
 func LoadFromFile(filename string) ([]SitesFilter, error) {
 	var f []SitesFilter
-	content, err := ioutil.ReadFile(filename)
+	content, err := os.ReadFile(filename)
 	if err == nil {
 		err = yaml.Unmarshal(content, &f)
 	}

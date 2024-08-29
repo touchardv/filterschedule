@@ -47,8 +47,14 @@ type TimeInteval struct {
 
 func (ti *TimeInteval) includes(t time.Time) bool {
 	date := t.Format("2006-01-02")
-	from, _ := time.ParseInLocation("2006-01-02T15:04", date+"T"+ti.From, t.Location())
-	to, _ := time.ParseInLocation("2006-01-02T15:04", date+"T"+ti.To, t.Location())
+	from, err := time.ParseInLocation("2006-01-02T15:04", date+"T"+ti.From, t.Location())
+	if err != nil {
+		log.Error(err)
+	}
+	to, err := time.ParseInLocation("2006-01-02T15:04", date+"T"+ti.To, t.Location())
+	if err != nil {
+		log.Error(err)
+	}
 
 	return from.Before(t) && t.Before(to)
 }

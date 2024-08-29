@@ -58,3 +58,11 @@ func TestTimeInterval(t *testing.T) {
 		t.Fatal(interval, " should not include ", timestamp)
 	}
 }
+
+func TestTimeIntervalWithZone(t *testing.T) {
+	interval := TimeInteval{From: "08:00+02", To: "20:00+02"}
+	timestamp := time.Date(2022, 5, 7, 12, 0, 0, 0, time.UTC)
+	if interval.includes(timestamp) {
+		t.Fatal(interval, " should not include ", timestamp)
+	}
+}
